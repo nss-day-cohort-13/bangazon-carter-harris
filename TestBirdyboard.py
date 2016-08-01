@@ -2,6 +2,16 @@ import unittest
 from Birdyboard import *
 
 
+class TestBirdyboard(unittest.TestCase):
+
+  @classmethod
+  def setUpClass(self):
+    self.chirp = Birdyboard()
+
+
+ # ----------------- THINGS TO TEST ---------------------
+ -
+
 
 
 
