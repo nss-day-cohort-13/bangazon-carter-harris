@@ -1,7 +1,8 @@
+from user import *
 
 class Main_menu():
 
-  def show_menu(self, user):
+  def show_menu(self):
     # list to store user_name and full_name
 
     # Command line menu for Birdyboard
@@ -21,6 +22,8 @@ class Main_menu():
 
         print('Enter screen name')
         screen_name = input('> ')
+
+        print('Hello {0}, or should I call you by your real name -> {1}'.format(screen_name, full_name))
 
         user = User(full_name, screen_name)
 
