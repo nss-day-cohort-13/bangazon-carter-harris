@@ -2,8 +2,13 @@ from user import *
 
 class Main_menu():
 
-  def show_menu(self):
-    # list to store user_name and full_name
+
+  def new_user_select_user_menu(self):
+    '''
+      First Menu the user will see.
+      They will be able to make and account or select a user to begin chirpping.
+
+    '''
 
     # Command line menu for Birdyboard
     print(' ~ Tweet tweet, welcom to BirdyBoard, plz select from the following menu ~ ')
@@ -14,8 +19,10 @@ class Main_menu():
     print('6. Exit')
     choice = input('> ')
 
+    # New User choice
     if int(choice) == 1:
 
+      # If choice is '1' the user enters full name and screen name
       if choice == '1':
         print('Enter full name')
         full_name = input('> ')
@@ -25,6 +32,7 @@ class Main_menu():
 
         print('Hello {0}, or should I call you by your real name -> {1}'.format(screen_name, full_name))
 
+        # The two user inputs are now passed into the User class to create a User object
         user = User(full_name, screen_name)
 
 
@@ -39,4 +47,4 @@ class Main_menu():
 
 if __name__ == "__main__":
   chirp = Main_menu()
-  chirp.show_menu()
+  chirp.new_user_select_user_menu()
