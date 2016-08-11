@@ -7,7 +7,15 @@ class User:
   ''' Create User Object. '''
 
   def __init__(self, full_name, screen_name):
+
+    '''
+      Method creates an object with attributes of full_name, screen_name, and a UUID
+
+      Args:
+        • full_name(str)
+        • screen_name(str)
+    '''
+
     self.full_name = full_name
     self.screen_name = screen_name
-    self.uuid = uuid.uuid4()
-    # self.user_id = random.randrange(1, 100000000000)
+    self.user_id = uuid.uuid4() # creates unique id for each user via the 'import uuid' from line 2

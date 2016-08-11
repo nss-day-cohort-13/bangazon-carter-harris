@@ -1,0 +1,13 @@
+options to make a sn etc and login
+that should take you to the next menu
+
+
+2. test for user
+  - input, should be a string
+  - think about what should be the storage format
+  -
+
+
+
+3. store users in a list or a tuple or a dict.
+4. test to see if there is an empty obj
