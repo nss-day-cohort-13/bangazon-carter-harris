@@ -1,6 +1,4 @@
-import random
 import uuid
-from main_menu import *
 
 class User:
 
@@ -12,8 +10,8 @@ class User:
       Method creates an object with attributes of full_name, screen_name, and a UUID
 
       Args:
-        • full_name(str)
-        • screen_name(str)
+        • full_name(str) -> users full name stored as a string
+        • screen_name(str) -> users screen name stored as a string
     '''
 
     self.full_name = full_name

@@ -1,5 +1,4 @@
 import uuid
-
 from main_menu import *
 from conversation import *
 
@@ -26,4 +25,3 @@ class Chirp():
     self.private = private
     self.receiver = receiver_id
     self.chirp_id = str(uuid.uuid4())
-    # new_conversation = Conversation(self.message_id)
