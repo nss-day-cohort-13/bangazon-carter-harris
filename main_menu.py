@@ -28,17 +28,14 @@ class Birdyboard():
 
     try:
       self.all_users = self.deserialize_data(self.users_filename)
-      print(self.all_users)
     except EOFError:
       self.all_users = {}
     try:
       self.all_chirps = self.deserialize_data(self.chirps_filename)
-      print(self.all_chirps)
     except EOFError:
       self.all_chirps = {}
     try:
       self.all_conversations = self.deserialize_data(self.conversations_filename)
-      print(self.all_conversations)
     except EOFError:
       self.all_conversations = {}
 
@@ -131,6 +128,9 @@ class Birdyboard():
 
 
 
+
+
+
 # ----------------------------------------#
 # ------------- Select Users -------------#
 # ----------------------------------------#
@@ -151,6 +151,7 @@ class Birdyboard():
     temp_user_dict = dict()
     counter = 1
     for key, value in self.all_users.items():
+      self.current_user
       print('{}. {}'.format(counter, value.full_name))
       temp_user_dict[counter] = value
       counter += 1
@@ -159,9 +160,11 @@ class Birdyboard():
     for key, value in temp_user_dict.items():
       if key == selected_user:
         self.current_user = value
-        print(self.current_user.full_name, self.current_user.user_id, self.current_user.screen_name)
 
     self.start_main_menu()
+
+
+
 
 
 
@@ -173,34 +176,46 @@ class Birdyboard():
     '''
       This menu will show the user all the chirps, public and private. The user will then
       pick which chirp thread they want to chirp at.
-
     '''
-    print('view chirps lol')
-    print(self.all_chirps)
-    # key of chirp_id, value of message blah blah
+    self.clear_the_page()
 
-    temp_chirp_dict = dict()
+
+    # make a temp dict to store print conversations first index
+    temp_convo_dict = dict()
     counter = 1
-    for key, value in self.all_chirps.items():
-      print('{}. {}'.format(counter, value.message))
-      temp_chirp_dict[counter] = value
+    for key, conversation in self.all_conversations.items():
+      print('{}. {}: {}'.format(counter, self.all_users[self.all_chirps[conversation.chirp_list[0]].author].full_name, self.all_chirps[conversation.chirp_list[0]].message))
+      temp_convo_dict[counter] = conversation # converstation
       counter += 1
 
-    selected_chirp = int(input('> ')) # users input for running the for loop below
-    for key, value in temp_chirp_dict.items():
-      if key == selected_chirp:
-        self.current_user = value
-        print(self.current_user.full_name, self.current_user.user_id, self.current_user.screen_name)
+
+    # take user selection and loop over temp convo dict to grab their choice
+    selected_convo = int(input('Select a chirp > ')) # users input for running the for loop below
+    for key, value in temp_convo_dict.items():
+      if key == selected_convo:
+        for chirp_key_id in value.chirp_list:
+          print('{}: {}'.format(self.all_users[self.all_chirps[chirp_key_id].author].full_name, self.all_chirps[chirp_key_id].message))
 
 
-    pass
+    # user selects to reply to a chirp from the
+    print('1. Reply')
+    # user selects to view chirps again
+    print('2. Back')
+    # send user back to main menu
+    print('3. Main Menu')
 
-    # temp_user_dict = dict()
-    # counter = 1
-    # for key, value in self.all_users.items():
-    #   print('{}. {}'.format(counter, value.full_name))
-    #   temp_user_dict[counter] = value
-    #   counter += 1
+    choice = input('> ')
+    if choice == '1':
+      self.reply_to_chirp()
+    elif choice == '2':
+      self.view_chirps()
+    elif choice == '3':
+      self.start_main_menu()
+    else:
+      print('Please select one of the three choices')
+
+
+
 
 
 
@@ -214,15 +229,11 @@ class Birdyboard():
 
     '''
     self.clear_the_page()
-    print('{}'.format(self.current_user.full_name))
+    print('{}'.format(self.current_user.full_name)) # show users name
 
-    print('Enter your full name')
     message = input('Public Chirp > ')
 
-    # pass user_id into Chirp
-
     public_chirp = Chirp(message, self.current_user.user_id)
-    print(public_chirp)
     self.all_chirps[public_chirp.chirp_id] = public_chirp
     self.serialize_data(self.all_chirps, self.chirps_filename)
 
@@ -234,6 +245,10 @@ class Birdyboard():
     self.start_main_menu() # send the user back to the main menu
 
 
+
+
+
+
 # ----------------------------------------#
 # ---------- Create Private Chirp --------#
 # ----------------------------------------#
@@ -243,8 +258,42 @@ class Birdyboard():
       pick which chirp thread they want to chirp at.
 
     '''
-    print('create private chirp lol')
+    self.clear_the_page()
+    print('{}'.format(self.current_user.full_name)) # show users name
+
+    message = input('Private Chirp > ')
+
+    receiver = self.select_users();
+
+    private_chirp = Chirp(message, self.current_user.user_id, private=True, receiver_id=None)
+    self.all_chirps[private_chirp.chirp_id] = private_chirp
+    self.serialize_data(self.all_chirps, self.chirps_filename)
+
+    print('Chirp id being passed into Convo private', private_chirp.chirp_id)
+    new_conversation = Conversation(private_chirp.chirp_id)
+    self.all_conversations[new_conversation.conversation_id] = new_conversation
+    self.serialize_data(self.all_conversations, self.conversations_filename)
+    time.sleep(1)
+
+    self.start_main_menu() # send the user back to the main menu
+
+
+
+
+
+
+# ----------------------------------------#
+# ----------- Reply to a chirp -----------#
+# ----------------------------------------#
+  def reply_to_chirp(self):
+    reply = input('Your reply > ')
     pass
+
+    # add the reply to the chirp list that corresponds to the converstation
+    # and dont
+
+
+
 
 
 
